@@ -7,6 +7,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 )
@@ -51,7 +52,12 @@ func main() {
 	r.HandleFunc("/course/{id}", deleteOneCourse).Methods("DELETE")
 
 	// listen to a port
-	log.Fatal(http.ListenAndServe(":4000", r))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Fatal(http.ListenAndServe(":"+port, r))
 
 }
 
